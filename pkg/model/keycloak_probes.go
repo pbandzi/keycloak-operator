@@ -10,7 +10,7 @@ import (
 const (
 	LivenessProbeImplementation = `#!/bin/bash
 set -e
-curl -s --max-time 10 --fail http://$(hostname -i):8080/auth > /dev/null
+curl -s --max-time 30 --fail http://$(hostname -i):8080/auth > /dev/null
 `
 	ReadinessProbeImplementation = `#!/bin/bash
 set -e
@@ -39,8 +39,8 @@ else
 	AUTH_STRING="--digest -u $USERNAME:$PASSWORD"
 fi
 
-curl -s --max-time 10 --fail http://localhost:9990/management $AUTH_STRING --header "Content-Type: application/json" -d "{\"operation\":\"test-connection-in-pool\", \"address\":[\"subsystem\",\"datasources\",\"${DATASOURCE_POOL_TYPE}\",\"${DATASOURCE_POOL_NAME}\"], \"json.pretty\":1}"
-curl -s --max-time 10 --fail http://$(hostname -i):8080/auth > /dev/null
+curl -s --max-time 30 --fail http://localhost:9990/management $AUTH_STRING --header "Content-Type: application/json" -d "{\"operation\":\"test-connection-in-pool\", \"address\":[\"subsystem\",\"datasources\",\"${DATASOURCE_POOL_TYPE}\",\"${DATASOURCE_POOL_NAME}\"], \"json.pretty\":1}"
+curl -s --max-time 30 --fail http://$(hostname -i):8080/auth > /dev/null
 `
 )
 
